@@ -68,7 +68,7 @@ li:hover {
     margin-left: 10px;
 }
 
-.liButtons {
+.liButtons, .iwButton {
     /*float: right;*/
     height: 20px;
     width: 20px;
@@ -94,7 +94,7 @@ li:hover {
     appearance: none;
 }
 
-#liEditButton {
+#liEditButton, #confirmEditButton {
     position: absolute;
     right: 70px;
     /*margin-right: 15px;*/
@@ -108,32 +108,50 @@ li:hover {
     padding-bottom: 5px;
 }
 
-#confirmEditButton {
-    position: absolute;
-    right: 70px;
-    padding-bottom: 5px;
-}
-
-#liEditButton:after {
+#liEditButton:after, #iwEditButton:after {
     content: '✎';
 }
 
-#liDeleteButton:after {
+#liDeleteButton:after, #iwDeleteButton:after {
     content: '✖';
 }
 
-#confirmEditButton:after {
+#confirmEditButton:after, #iwConfirmEditButton:after {
     content: '✔';
 }
 
-#liEditButton:hover, #liDeleteButton:hover, #confirmEditButton:hover {
+#liEditButton:hover, #liDeleteButton:hover, #confirmEditButton:hover, #iwEditButton:hover, #iwDeleteButton:hover, #iwConfirmEditButton:hover  {
     -webkit-transform: scale(1.3);
     transform: scale(1.3);
 }
 
-#liEditButton:active, #liDeleteButton:active, #confirmEditButton:active {
+#liEditButton:active, #liDeleteButton:active, #confirmEditButton:active, #iwEditButton:active, #iwDeleteButton:active, #iwConfirmEditButton:active {
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
+}
+
+#iwEditButton, #iwDeleteButton, #iwConfirmEditButton {
+    position: absolute;
+    float: bottom;
+    padding-bottom: 5px;
+}
+
+#iwEditButton, #iwConfirmEditButton {
+    right: 30px;
+}
+
+#iwDeleteButton {
+    right: 10px;
+}
+
+.iwDiv {
+    position: relative;
+    height: 100px;
+    max-height: 300px;
+}
+
+.hidden {
+    display: none;
 }
 
 /* Some Flexbox classes */
