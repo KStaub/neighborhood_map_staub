@@ -37,8 +37,8 @@
 			<h2>List of Places</h2>
 			<ol id="list" data-bind="foreach: Markers">
 				<!-- ko if: $data.getVisible() -->
-				<li class="" data-bind="template: { name: $root.listTemplate }, attr: {id: Markers.indexOf($data)}, click: map.panTo(position)">
-				</li>
+					<li class="" data-bind="template: { name: $root.listTemplateFn($data) }" data-bind="attr: {id: Markers.indexOf($data)}" data-bind="click: map.panTo(position), function() { $root.toggleHiddenDesc }">
+					</li>
 				<!-- /ko -->
 			</ol>
 			<button type="button" data-bind="click: $root.alphaSort">Sort</button>
@@ -74,8 +74,8 @@
 	<!-- Standard Info Window Content -->
 	<script type="text/html" id="infoWindowContent">
 		<div data-bind="with: currentMarker">
-			<h3 data-bind="text: nameInfo"></h3>
-			<p data-bind="text: descriptionInfo"></p>
+			<h3 id="nameInfo"></h3>
+			<p id="descriptionInfo"></p>
 			<button type="button" id="removeMarkerButton" data-bind="click: function() { $root.deleteListItem($data) }">Remove</button>
 		</div>
 	</script>
@@ -92,7 +92,8 @@
 	</script>
 	<!-- Standard List Item -->
 	<script type="text/html" id="listItem">
-		<span data-bind="text: nameInfo + ', ' + descriptionInfo"></span>
+		<span data-bind="text: nameInfo"></span>
+		<p class="hidden" id="listItemDesc" data-bind="text: descriptionInfo"></p>
 		<button class="liButtons" id="liEditButton" type="button" data-bind="click: function() { $root.editListItem($data) }"></button>
 		<button class="liButtons" id="liDeleteButton" type="button" data-bind="click: function() { $root.deleteListItem($data) }"></button>
 	</script>
