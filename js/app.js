@@ -10,7 +10,6 @@ function ViewModel() {
 
     this.addMarker = function(marker) {
         Markers.push(marker);
-        self.listItems.push(marker);
     };
 
     this.hideMarker = function() {
@@ -68,8 +67,8 @@ function ViewModel() {
     // This doesn't work yet. One of a few sort functions, perhaps.
     this.alphaSort = function() {
         var tempArr = ko.observableArray([]);
-        for(var i = 0; i < self.listItems.length; i++) {
-            tempArr.push(listItems[i].nameInfo);
+        for(var i = 0; i < Markers.length; i++) {
+            tempArr.push(Markers[i].nameInfo);
         };
         tempArr.sort();
         return tempArr;
@@ -78,6 +77,13 @@ function ViewModel() {
     this.addMarkerToMap = function(map, place, query) {
         // Center our map.
         map.panTo(place.geometry.location);
+
+        var contentTemplate = $('#infoWindowContent').html();
+        var contentEditTemplate = $('#infoWindowEditMode').html();
+        // Construct a new InfoWindow with contentTemplate as its content.
+        var infoWindow = new google.maps.InfoWindow({
+            "content": contentTemplate
+        });
         // Create our marker.
         var marker = new google.maps.Marker({
             // Default marker setup properties
@@ -88,25 +94,14 @@ function ViewModel() {
             // Custom properties for listing and editing purposes
             nameInfo: place.name,
             descriptionInfo: place.vicinity,
-            infoWindowPointer: null
+            infoWindowPointer: infoWindow
         });
         self.currentMarker = marker;
-
-        // Setting up content for infoWindows
-        var contentTemplate = $('#infoWindowContent').html();
-        var contentEditTemplate = $('#infoWindowEditMode').html();
-
-        console.log(contentTemplate);
-
-        // Construct a new InfoWindow.
-        var infoWindow = new google.maps.InfoWindow({});
-        infoWindow.setContent(contentTemplate);
 
         // Hooking the infoWindow into the marker.
         marker.infoWindowPointer = infoWindow;
 
         //Adds this marker to the model.
-        debugger;
         self.addMarker(marker);
 
         //Update our lastInfoWindow.
@@ -138,7 +133,6 @@ function ViewModel() {
             // On submitting the edit form, we update the marker.
             editForm.submit(function(event) {
                 Markers.remove(marker);
-                // self.listItems.remove(marker);
                 var newName = $('#infoWindowEditName').val();
                 var newDesc = $('#infoWindowEditDesc').val();
 
