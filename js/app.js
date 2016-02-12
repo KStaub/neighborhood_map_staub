@@ -106,6 +106,7 @@ function ViewModel() {
 		marker.infoWindowPointer = infoWindow;
 
 		//Adds this marker to the model.
+        debugger;
 		self.addMarker(marker);
 
 		//Update our lastInfoWindow.
