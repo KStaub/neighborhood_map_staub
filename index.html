@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Neighborhood Map">
+    <meta name="author" content="Kyle Staub">
+    <title>Favorite Neighborhood Spots</title>
+
+    <script>
+      (function(w,g){w['GoogleAnalyticsObject']=g;
+      w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)};w[g].l=1*new Date();})(window,'ga');
+
+      // TODO: replace with your Google Analytics profile ID.
+      ga('create', 'UA-XXXX-Y');
+      ga('send', 'pageview');
+    </script>
+    
+
+</head>
+<body>
+	<div class="grid">
+
+		<div class="col-12" id="title-view">
+			<h1 id="title">Neighborhood Map</h1>
+			<!-- Social Media Posting -->
+		</div>
+
+		<div class="col-6" id="menu-view">
+			<ul>
+
+			</ul>
+		</div>
+
+		<div class="col-12" id="list-view" data-bind="with: Markers">
+			<h2>List of Places</h2>
+			<ol id="list" data-bind="foreach: Markers">
+				<!-- ko if: $data.getVisible() -->
+				<li class="" data-bind="template: { name: $root.listTemplate }, attr: {id: Markers.indexOf($data)}, click: map.panTo(position)">
+				</li>
+				<!-- /ko -->
+			</ol>
+			<button type="button" data-bind="click: $root.alphaSort">Sort</button>
+			<button type="button" data-bind="click: $root.resetList">Reset</button>
+		</div>
+
+		<div class="col-12" id="search-view">
+			<form id="search-form">
+				Search: <input type="text" id="searchTextField" placeholder="Search for places!" size="90"></input>
+			</form>
+		</div>
+
+		<div class="col-12" id="map">
+		</div>
+
+	</div>
+
+	<!-- Templates -->
+	<!-- using Knockout.js template controls -->
+
+	<!-- Templates for InfoWindows -->
+	<!-- Edit Mode -->
+	<script type="text/html" id="infoWindowEditMode">
+		<div>
+			<form id="editForm">
+				<input id="infoWindowEditName" type="text" placeholder="Enter a new name"></input>
+				<input id="infoWindowEditDesc" type="text" placeholder="and a new description"></input>
+				<button type="button" id="submitEditButton" data-bind="click: function() { $root.submitEdit }">Confirm</button>
+				<button type="button" id="removeMarkerButton" data-bind="click: function() { $root.deleteListItem(marker) }">Remove</button>
+			</form>
+		</div>
+	</script>
+	<!-- Standard Info Window Content -->
+	<script type="text/html" id="infoWindowContent">
+		<div data-bind="with: currentMarker">
+			<h3 data-bind="text: nameInfo"></h3>
+			<p data-bind="text: descriptionInfo"></p>
+			<button type="button" id="removeMarkerButton" data-bind="click: function() { $root.deleteListItem($data) }">Remove</button>
+		</div>
+	</script>
+
+	<!-- Templates for the List View -->
+	<!-- Edit Mode -->
+	<script type="text/html" id="listItemEditMode">
+		<form>
+			<input id="liNameEdit" type="text" placeholder="Enter a new name"></input>
+			<span>, </span>
+			<input id="liDescEdit" type="text" placeholder="and a new description"></input>	
+			<button type="button" class="liButtons" id="confirmEditButton" data-bind="click: function() { $root.editSubmit($data) }"></button>
+		</form>
+	</script>
+	<!-- Standard List Item -->
+	<script type="text/html" id="listItem">
+		<span data-bind="text: nameInfo + ', ' + descriptionInfo"></span>
+		<button class="liButtons" id="liEditButton" type="button" data-bind="click: function() { $root.editListItem($data) }"></button>
+		<button class="liButtons" id="liDeleteButton" type="button" data-bind="click: function() { $root.deleteListItem($data) }"></button>
+	</script>
+
+	<!-- Loading library assets -->
+	<script src="http://www.google-analytics.com/analytics.js"></script>
+    <script async src="js/lib/perfmatters.js"></script>
+    <script async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQBNOI4hSEITZsnmP425IzyPfGknoJrrg&signed_in=true&callback=viewModel.initMap&libraries=places">
+    </script>
+
+	<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+	<script type="text/javascript" src="js/lib/knockout-3.2.0.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+
+	<!-- Performance Metric Display -->
+	<footer>
+	    <p>&copy; Web Performance 2014 <span id="crp-stats"></span></p>
+	</footer>
+</body>
+
+</html>
